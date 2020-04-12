@@ -7,6 +7,7 @@ from ressources.etudiant import Etudiant, ListeEtudiant
 from ressources.ecole import Ecole, ListeEcole
 from db import db
 from os import getenv
+
 #from secret_settings import *
 
 from security import authenticate, identity
@@ -17,10 +18,6 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 #app.secret_key = "A super secret API key"
 app.secret_key = getenv("SECRET_KEY")
 api = Api(app)
-
-@app.before_first_request
-def create_tables():
-    db.create_all()
 
 app.config['JWT_AUTH_USERNAME_KEY'] = 'nom_authent'
 app.config['JWT_AUTH_URL_RULE'] = '/authent'
