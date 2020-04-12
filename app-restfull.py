@@ -7,7 +7,7 @@ from ressources.etudiant import Etudiant, ListeEtudiant
 from ressources.ecole import Ecole, ListeEcole
 from db import db
 from os import getenv
-from secret_settings import *
+#from secret_settings import *
 
 from security import authenticate, identity
 
