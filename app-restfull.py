@@ -6,13 +6,17 @@ from ressources.user import UserRegister
 from ressources.etudiant import Etudiant, ListeEtudiant
 from ressources.ecole import Ecole, ListeEcole
 from db import db
+from os import getenv
+import secret_settings
 
 from security import authenticate, identity
 
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.secret_key = "A super secret API key"
+#app.secret_key = "A super secret API key"
+app.secret_key = getenv("SECRET_KEY")
+print(app.secret_key)
 api = Api(app)
 
 @app.before_first_request

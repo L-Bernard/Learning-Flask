@@ -1703,3 +1703,4 @@ __pycache__/security.cpython-37.pyc
 data.db
 initDB.py.old
 *.pyc
+secret_settings.env
