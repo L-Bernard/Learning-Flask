@@ -8,15 +8,12 @@ from ressources.ecole import Ecole, ListeEcole
 from db import db
 from os import getenv
 
-#from secret_settings import *
-
 from security import authenticate, identity
 
 app = Flask(__name__)
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = getenv("DATABASE_URL", "sqlite:///data.db")
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-#app.secret_key = "A super secret API key"
-app.secret_key = getenv("SECRET_KEY")
+app.secret_key = getenv("SECRET_KEY", "debug-test-key")
 api = Api(app)
 
 app.config['JWT_AUTH_USERNAME_KEY'] = 'nom_authent'
@@ -31,5 +28,14 @@ api.add_resource(ListeEcole, "/ecole")
 api.add_resource(UserRegister, "/register")
 
 if __name__ == "__main__":
+    if app.config['DEBUG']:
+        from secret_settings import *
+
     db.init_app(app)
+
+    if app.config['DEBUG']:
+        @app.before_first_request
+        def create_tables():
+            db.create_all()
+
     app.run(port=5000, debug=True)
